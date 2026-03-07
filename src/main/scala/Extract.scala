@@ -1,17 +1,34 @@
 import scala.io.Source
+import scala.util.{Try, Success, Failure}
 
 object Extract {
 
-  // อ่าน CSV แล้วคืนค่าเป็น List
+  // อ่านไฟล์ CSV แล้วคืนค่าเป็น List
   def readCSV(path: String): List[String] = {
 
-    val file = Source.fromFile(path)
+    // ใช้ Try เพื่อป้องกัน error กรณีไฟล์ไม่พบ
+    Try {
 
-    val lines = file.getLines().toList
+      val file = Source.fromFile(path)
 
-    file.close()
+      // อ่านทุกบรรทัดของไฟล์
+      val lines = file.getLines().toList
 
-    lines.tail
+      file.close()
+
+      // ตัดหัวข้อออก
+      lines.tail
+
+    } match {
+
+      case Success(data) => data
+
+      case Failure(e) =>
+        println("Error reading file: " + e.getMessage)
+        List.empty
+
+    }
+
   }
 
 }

@@ -1,34 +1,44 @@
 import java.io.PrintWriter
+import scala.util.Try
 
 object Load {
 
+  // ลบข้อมูลซ้ำ
   def removeDuplicate(data: List[Array[String]]): List[Array[String]] = {
-
     data.distinct
-
   }
 
-  // เขียน JSON ลงไฟล์
+  // ฟังก์ชันเขียนข้อมูล JSON ลงไฟล์
   def writeJsonFile(path: String, jsonData: Iterable[String]): Unit = {
 
-    val writer = new PrintWriter(path)
+    // ใช้ Try กัน error ตอนเขียนไฟล์
+    Try {
 
-    writer.println("[")
+      val writer = new PrintWriter(path)
 
-    val jsonList = jsonData.toList
+      writer.println("[")
 
-    for (i <- jsonList.indices) {
+      val jsonList = jsonData.toList
 
-      if (i == jsonList.length - 1)
-        writer.println(jsonList(i))
-      else
-        writer.println(jsonList(i) + ",")
+      // เขียน JSON ทีละ object
+      for (i <- jsonList.indices) {
+
+        if (i == jsonList.length - 1)
+          writer.println(jsonList(i))
+        else
+          writer.println(jsonList(i) + ",")
+
+      }
+
+      writer.println("]")
+
+      writer.close()
+
+    }.recover {
+
+      case e => println("Error writing JSON: " + e.getMessage)
 
     }
-
-    writer.println("]")
-
-    writer.close()
 
   }
 
