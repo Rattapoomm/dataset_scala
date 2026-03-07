@@ -37,7 +37,6 @@ object Transform {
 
   println(s"Most Popular Arrival Airport : ${popularAirport._1} (${popularAirport._2} flights)")
 
-  // ประเทศที่มีผู้โดยสารมากสุด
   val popularCountry =
     data.groupBy(_(8))
         .mapValues(_.size)
@@ -60,8 +59,35 @@ object Transform {
   statusCount.foreach { case (status, count) =>
     println(s"$status : $count")
   }
+  // หาคนบินซ้ำ
+  val duplicatePassenger =
+  data.groupBy(_(0)).count(_._2.size > 1)
 
-}
+  println(s"Passengers with multiple flights : $duplicatePassenger")
+  
+  // แยกช่วงอายุ
+  var child = 0
+  var teen = 0
+  var adult = 0
+  var old = 0
+
+  data.foreach { row =>
+    val age = row(4).toInt
+
+    if (age <= 12) child += 1
+    else if (age <= 20) teen += 1
+    else if (age <= 60) adult += 1
+    else old += 1
+  }
+
+  println("\nAge Groups:")
+  println(s"Children (0-12) : $child")
+  println(s"Teen (13-20) : $teen")
+  println(s"Adult (21-60) : $adult")
+  println(s"Elderly (60+) : $old")
+  }
+  
+
   // แปลงเป็น JSON
   def toJson(row: Array[String]): String = {
 

@@ -6,9 +6,7 @@ object Main {
 
     val path = "src/main/scala/airplant.csv"
 
-    // =========================
-    // SEQUENTIAL PROCESSING
-    // =========================
+    // SEQUENTIAL
 
     val startSeq = System.nanoTime()
 
@@ -21,7 +19,7 @@ object Main {
     val valid = unique.filter(Transform.isValid)
 
     Transform.summarize(valid)
-    
+
     val jsonResult = valid.map(Transform.toJson)
 
     // สร้างไฟล์ JSON
@@ -34,9 +32,7 @@ object Main {
     println("Sequential JSON created: output_sequential.json")
     println(s"Sequential Time: $seqTime seconds")
 
-    // =========================
-    // PARALLEL PROCESSING
-    // =========================
+    // PARALLEL
 
     val startPar = System.nanoTime()
 

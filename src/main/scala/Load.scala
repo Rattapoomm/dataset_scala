@@ -2,7 +2,6 @@ import java.io.PrintWriter
 
 object Load {
 
-  // ลบ duplicate
   def removeDuplicate(data: List[Array[String]]): List[Array[String]] = {
 
     data.distinct
