@@ -7,7 +7,7 @@ object Clean {
 
   // split ด้วย comma แล้ว clean ทุก column
   def cleanRow(line: String): Array[String] = {
-    line.split(",").map(cleanText)
+    line.split(",(?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)").map(cleanText)
   }
 
 }

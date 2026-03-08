@@ -127,7 +127,7 @@ object Transform {
 
   // ฟังก์ชันดึงค่าจาก array แบบ safe
   def safe(i: Int, row: Array[String]): String =
-    if (row.length > i) row(i) else ""
+    if (row.length > i) row(i).replace("\"","\\\"") else ""
 
   // แปลงข้อมูล 1 แถวเป็น JSON format
   def toJson(row: Array[String]): String = {
